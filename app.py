@@ -16,7 +16,7 @@ input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
 # ⚠️ UPDATE THIS with your real class names
-class_names = ["Disease1", "Disease2", "Disease3", "Disease4"]
+class_names = ["Normal", "Diabetic Retinopathy", "Glaucoma", "Cataract"]
 
 IMG_SIZE = (224, 224)
 
