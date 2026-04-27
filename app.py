@@ -1,12 +1,12 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import tflite_runtime.interpreter as tflite
+import tensorflow as tf
 
-# Load model
+# Load TFLite model
 @st.cache_resource
 def load_model():
-    interpreter = tflite.Interpreter(
+    interpreter = tf.lite.Interpreter(
         model_path="model/densenet201_optimized.tflite"
     )
     interpreter.allocate_tensors()
@@ -17,8 +17,7 @@ interpreter = load_model()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
-# ⚠️ Put your REAL classes here
-class_names = ["Disease1", "Disease2", "Disease3", "Disease4"]
+class_names = ["Normal", "Diabetic Retinopathy", "Glaucoma", "Cataract"]
 
 IMG_SIZE = (224, 224)
 
@@ -31,11 +30,11 @@ def preprocess(image):
 
 st.title("Retinal Disease Classification")
 
-file = st.file_uploader("Upload Fundus Image", type=["jpg", "png"])
+file = st.file_uploader("Upload Fundus Image", type=["jpg","png"])
 
 if file:
     img = Image.open(file)
-    st.image(img, use_column_width=True)
+    st.image(img)
 
     input_data = preprocess(img)
 
