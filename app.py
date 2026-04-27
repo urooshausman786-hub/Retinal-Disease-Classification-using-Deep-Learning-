@@ -7,7 +7,7 @@ import tensorflow as tf
 @st.cache_resource
 def load_model():
     interpreter = tf.lite.Interpreter(
-    model_path="model/densenet201_optimized.tflite"
+    model_path="densenet201_optimized.tflite"
 )
 
     interpreter.allocate_tensors()
