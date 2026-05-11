@@ -89,7 +89,7 @@ st.markdown('<div class="custom-header">🩺 Retinal Disease Classification Syst
 # File uploader
 # -----------------------------
 uploaded_file = st.file_uploader(
-    "📤 Drag & drop a retinal image here or click to browse (JPG, PNG)",
+    "📤 Drag & drop a retinal image here or click to browse (JPG, PNG, max 200MB)",
     type=["jpg", "jpeg", "png"]
 )
 
@@ -109,9 +109,9 @@ def preprocess(image):
 if uploaded_file:
     image = Image.open(uploaded_file)
 
-    st.image(image, caption="🖼️ Uploaded Retinal Image")
+    st.image(image, caption=" Uploaded Retinal Image")
 
-    st.info("🔍 Running model prediction...")
+    st.info("👁️ Running model prediction...")
 
     input_data = preprocess(image)
 
@@ -122,12 +122,15 @@ if uploaded_file:
     pred = np.argmax(output)
     confidence = output[pred]
 
+    # Display results in a purple gradient card
     st.markdown(f"""
     <div class="prediction-card">
-        ✅ Prediction: <b>{class_names[pred]}</b><br>
-        📊 Confidence: {confidence*100:.2f}%
+        ✅ Predicted Disease: <b>{classes[pred_class]}</b><br>
+        Confidence: {confidence*100:.2f}%
     </div>
     """, unsafe_allow_html=True)
 
 else:
     st.info("👁️ Please upload a retinal image to begin diagnosis.")
+
+
