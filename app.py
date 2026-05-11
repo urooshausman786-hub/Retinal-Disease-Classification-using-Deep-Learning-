@@ -56,10 +56,10 @@ st.markdown("""
 st.markdown('<div class="custom-header">🩺 Retinal Disease Classification</div>', unsafe_allow_html=True)
 
 # -----------------------------
+
 # File uploader
 # -----------------------------
-uploaded_file = st.file_uploader("Upload retinal image", type=["jpg", "png", "jpeg"])
-
+uploaded_file = st.file_uploader( "📤 Drag & drop a retinal image here or click to browse (JPG, PNG, max 200MB)", type=["jpg", "jpeg", "png"] )
 # -----------------------------
 # Preprocessing function
 # -----------------------------
