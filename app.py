@@ -29,7 +29,7 @@ def preprocess(image):
     img = np.expand_dims(img, axis=0).astype(np.float32)
     return img
 
-st.title("Retinal Disease Classification")
+st.title("Retinal Disease Classification System")
 
 file = st.file_uploader("Upload Fundus Image", type=["jpg","png"])
 
