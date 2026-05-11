@@ -13,11 +13,13 @@ st.set_page_config(
 )
 
 # -----------------------------
-# Load TFLite model (cached)
+# Load model (DenseNet201)
 # -----------------------------
 @st.cache_resource
 def load_model():
-    interpreter = tf.lite.Interpreter(model_path="densenet201_optimized.tflite")
+    interpreter = tf.lite.Interpreter(
+        model_path="densenet201_optimized.tflite"   # ✅ your model path
+    )
     interpreter.allocate_tensors()
     return interpreter
 
@@ -36,32 +38,63 @@ st.markdown("""
 .stApp {
     background: linear-gradient(to bottom, #ffffff, #f3e8ff);
 }
+
 .custom-header {
     color: #7c3aed;
     text-align: center;
     font-size: 45px;
     font-weight: bold;
 }
+
+.custom-subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+.stImage img {
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
 .prediction-card {
     background: linear-gradient(to right, #e0c3fc, #8ec5fc);
     padding: 20px;
     border-radius: 15px;
     text-align: center;
     font-size: 22px;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-top: 20px;
+}
+
+.stInfo {
+    background-color: #ede9fe !important;
+    color: #7c3aed !important;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 16px;
 }
 </style>
 """, unsafe_allow_html=True)
 
+# -----------------------------
 # Header
+# -----------------------------
 st.markdown('<div class="custom-header">🩺 Retinal Disease Classification</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-subtitle">Upload a retinal image to detect disease using AI</div>', unsafe_allow_html=True)
 
 # -----------------------------
-
 # File uploader
 # -----------------------------
-uploaded_file = st.file_uploader( "📤 Drag & drop a retinal image here or click to browse (JPG, PNG, max 200MB)", type=["jpg", "jpeg", "png"] )
+uploaded_file = st.file_uploader(
+    "📤 Drag & drop a retinal image here or click to browse (JPG, PNG)",
+    type=["jpg", "jpeg", "png"]
+)
+
 # -----------------------------
-# Preprocessing function
+# Preprocessing
 # -----------------------------
 def preprocess(image):
     image = image.convert("RGB")
@@ -75,9 +108,10 @@ def preprocess(image):
 # -----------------------------
 if uploaded_file:
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image")
 
-    st.info("Running prediction...")
+    st.image(image, caption="🖼️ Uploaded Retinal Image")
+
+    st.info("🔍 Running model prediction...")
 
     input_data = preprocess(image)
 
@@ -90,10 +124,10 @@ if uploaded_file:
 
     st.markdown(f"""
     <div class="prediction-card">
-        Prediction: <b>{class_names[pred]}</b><br>
-        Confidence: {confidence*100:.2f}%
+        ✅ Prediction: <b>{class_names[pred]}</b><br>
+        📊 Confidence: {confidence*100:.2f}%
     </div>
     """, unsafe_allow_html=True)
 
 else:
-    st.info("Please upload an image.")
+    st.info("👁️ Please upload a retinal image to begin diagnosis.")
