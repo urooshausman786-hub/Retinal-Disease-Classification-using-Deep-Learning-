@@ -18,7 +18,7 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     interpreter = tf.lite.Interpreter(
-        model_path="densenet201_optimized.tflite"   # ✅ your model path
+        model_path="densenet201_optimized.tflite"   
     )
     interpreter.allocate_tensors()
     return interpreter
@@ -82,8 +82,8 @@ st.markdown("""
 # -----------------------------
 # Header
 # -----------------------------
-st.markdown('<div class="custom-header">🩺 Retinal Disease Classification</div>', unsafe_allow_html=True)
-st.markdown('<div class="custom-subtitle">Upload a retinal image to detect disease using AI</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-header">🩺 Retinal Disease Classification System</div>', unsafe_allow_html=True)
+
 
 # -----------------------------
 # File uploader
